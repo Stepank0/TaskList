@@ -1,7 +1,7 @@
 package com.example.tasklist.domain.user;
 
 
-import com.example.tasklist.domain.tack.Tack;
+import com.example.tasklist.domain.task.Task;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
@@ -24,6 +24,6 @@ public class User {
     private String password;
     private String passwordConformation;
     private Set<Role> roles;
-    private List<Tack> tacks;
+    private List<Task> tacks;
 
 }

@@ -1,22 +1,22 @@
 package com.example.tasklist.repository.impl;
 
-import com.example.tasklist.domain.tack.Tack;
-import com.example.tasklist.repository.TackRepository;
+import com.example.tasklist.domain.task.Task;
+import com.example.tasklist.repository.TaskRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
 
 @Repository
-public class TackRepositoryImpl implements TackRepository {
+public class TaskRepositoryImpl implements TaskRepository {
 
     @Override
-    public Optional<Tack> findById(Long id) {
+    public Optional<Task> findById(Long id) {
         return Optional.empty();
     }
 
     @Override
-    public List<Tack> findAllByUser(Long userId) {
+    public List<Task> findAllByUser(Long userId) {
         return null;
     }
 
@@ -26,12 +26,12 @@ public class TackRepositoryImpl implements TackRepository {
     }
 
     @Override
-    public void update(Tack tack) {
+    public void update(Task tack) {
 
     }
 
     @Override
-    public void create(Tack tack) {
+    public void create(Task tack) {
 
     }
 

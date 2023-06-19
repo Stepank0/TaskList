@@ -1,31 +1,31 @@
 package com.example.tasklist.service.impl;
 
-import com.example.tasklist.domain.tack.Tack;
-import com.example.tasklist.service.TackService;
+import com.example.tasklist.domain.task.Task;
+import com.example.tasklist.service.TaskService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class TackServiceImpl implements TackService {
+public class TaskServiceImpl implements TaskService {
 
     @Override
-    public Tack getById(Long id) {
+    public Task getById(Long id) {
         return null;
     }
 
     @Override
-    public List<Tack> getAllByUser(Long id) {
+    public List<Task> getAllByUserId(Long id) {
         return null;
     }
 
     @Override
-    public Tack update(Tack tack) {
+    public Task update(Task tack) {
         return null;
     }
 
     @Override
-    public Tack create(Tack tack) {
+    public Task create(Task tack, Long id) {
         return null;
     }
 
