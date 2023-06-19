@@ -2,9 +2,11 @@ package com.example.tasklist.service.impl;
 
 import com.example.tasklist.domain.tack.Tack;
 import com.example.tasklist.service.TackService;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class TackServiceImpl implements TackService {
 
     @Override
