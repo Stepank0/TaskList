@@ -9,5 +9,11 @@ spring:
       mode: always
       continue-on-error: false
 #      data-locations: classpath:demo_data.sql
+security:
+  jwt:
+    secret: YmxqYmlvSUJsYmxrYktCS05ramJuaU5vdW5rN3A4OWJrbmlhdWZpdWtzZG5mcA==
+    access: 3600000
+    refresh: 2592000000
+
 server:
   port: 8097
