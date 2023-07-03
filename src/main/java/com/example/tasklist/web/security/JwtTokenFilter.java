@@ -33,5 +33,6 @@ public class JwtTokenFilter extends GenericFilter {
             } catch ( ResourceNotFoundException ignored) {}
 
         }
+        filterChain.doFilter(servletRequest, servletResponse);
     }
 }
