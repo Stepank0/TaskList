@@ -12,7 +12,7 @@ public interface UserService {
 
     User create(User user);
 
-    boolean isTackOwner(Long userId, Long tackId);
+    boolean isTaskOwner(Long userId, Long tackId);
 
     void delete(Long id);
 

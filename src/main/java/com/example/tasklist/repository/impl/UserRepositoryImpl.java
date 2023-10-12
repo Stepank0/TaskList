@@ -154,7 +154,7 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public boolean isTackOwner(Long userId, Long taskId) {
+    public boolean isTaskOwner(Long userId, Long taskId) {
         try {
             Connection connection = dataSourceConfig.getConnection();
             PreparedStatement statement = connection.prepareStatement(IS_TASK_OWNER);

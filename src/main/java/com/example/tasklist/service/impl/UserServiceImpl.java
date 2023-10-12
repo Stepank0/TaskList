@@ -61,8 +61,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional(readOnly = true)
-    public boolean isTackOwner(Long userId, Long tackId) {
-        return userRepository.isTackOwner(userId, tackId);
+    public boolean isTaskOwner(Long userId, Long tackId) {
+        return userRepository.isTaskOwner(userId, tackId);
     }
 
     @Override
