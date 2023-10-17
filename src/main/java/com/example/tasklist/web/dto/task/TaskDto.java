@@ -1,7 +1,7 @@
 package com.example.tasklist.web.dto.task;
 
 import com.example.tasklist.domain.task.Status;
-import com.example.tasklist.web.dto.validation.OnCreat;
+import com.example.tasklist.web.dto.validation.OnCreate;
 import com.example.tasklist.web.dto.validation.OnUpdate;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.NotNull;
@@ -17,13 +17,11 @@ public class TaskDto {
     @NotNull(message = "Id must be not null.", groups = OnUpdate.class)
     private Long id;
 
-    @NotNull(message = "Title must be not null.", groups = {OnCreat.class, OnUpdate.class})
-    @Length(max = 255, message = "Title length must be smaller than 255 symbols.",
-            groups = {OnCreat.class, OnUpdate.class})
+    @NotNull(message = "Title must be not null.", groups = {OnCreate.class, OnUpdate.class})
+    @Length(max = 255, message = "Title length must be smaller than 255 symbols.", groups = {OnCreate.class, OnUpdate.class})
     private String title;
 
-    @Length(max = 255, message = "Title length must be smaller than 255 symbols.",
-            groups = {OnCreat.class, OnUpdate.class})
+    @Length(max = 255, message = "Description length must be smaller than 255 symbols.", groups = {OnCreate.class, OnUpdate.class})
     private String description;
 
     private Status status;

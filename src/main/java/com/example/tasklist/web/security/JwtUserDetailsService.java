@@ -1,6 +1,5 @@
 package com.example.tasklist.web.security;
 
-
 import com.example.tasklist.domain.user.User;
 import com.example.tasklist.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -13,7 +12,6 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class JwtUserDetailsService implements UserDetailsService {
 
-
     private final UserService userService;
 
     @Override
@@ -21,7 +19,5 @@ public class JwtUserDetailsService implements UserDetailsService {
         User user = userService.getByUsername(username);
         return JwtEntityFactory.create(user);
     }
-
-
 
 }

@@ -1,6 +1,5 @@
 package com.example.tasklist.web.security;
 
-
 import com.example.tasklist.domain.exception.AccessDeniedException;
 import com.example.tasklist.domain.user.Role;
 import com.example.tasklist.domain.user.User;
@@ -29,7 +28,6 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class JwtTokenProvider {
 
-    //stores data from application.yaml
     private final JwtProperties jwtProperties;
 
     private final UserDetailsService userDetailsService;
@@ -47,7 +45,6 @@ public class JwtTokenProvider {
         claims.put("roles", resolveRoles(roles));
         Date now = new Date();
         Date validity = new Date(now.getTime() + jwtProperties.getAccess());
-
         return Jwts.builder()
                 .setClaims(claims)
                 .setIssuedAt(now)
@@ -67,14 +64,12 @@ public class JwtTokenProvider {
         claims.put("id", userId);
         Date now = new Date();
         Date validity = new Date(now.getTime() + jwtProperties.getRefresh());
-
         return Jwts.builder()
                 .setClaims(claims)
                 .setIssuedAt(now)
                 .setExpiration(validity)
                 .signWith(key)
                 .compact();
-
     }
 
     public JwtResponse refreshUserTokens(String refreshToken) {

@@ -25,7 +25,6 @@ public class TaskRowMapper {
             }
             return task;
         }
-
         return null;
     }
 
@@ -46,7 +45,7 @@ public class TaskRowMapper {
                 tasks.add(task);
             }
         }
-
-        return null;
+        return tasks;
     }
+
 }

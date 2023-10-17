@@ -21,33 +21,19 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public JwtResponse login(JwtRequest loginRequest) {
-        //redirecting the Spring to the method JwtUserDetailsService
-       JwtResponse jwtResponse = new JwtResponse();
-       authenticationManager.authenticate(
-               new UsernamePasswordAuthenticationToken(
-                       loginRequest.getUsername(),
-                       loginRequest.getPassword())
-       );
-       User user = userService.getByUsername(loginRequest.getUsername());
-       jwtResponse.setId(user.getId());
-       jwtResponse.setUsername(user.getUsername());
-       jwtResponse.setAccessToken(
-               jwtTokenProvider.createAccessToken(
-                       user.getId(),
-                       user.getUsername(),
-                       user.getRoles())
-       );
-       jwtResponse.setRefreshToken(
-               jwtTokenProvider.createRefreshToken(
-                       user.getId(),
-                       user.getUsername())
-       );
+        JwtResponse jwtResponse = new JwtResponse();
+        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
+        User user = userService.getByUsername(loginRequest.getUsername());
+        jwtResponse.setId(user.getId());
+        jwtResponse.setUsername(user.getUsername());
+        jwtResponse.setAccessToken(jwtTokenProvider.createAccessToken(user.getId(), user.getUsername(), user.getRoles()));
+        jwtResponse.setRefreshToken(jwtTokenProvider.createRefreshToken(user.getId(), user.getUsername()));
         return jwtResponse;
     }
 
     @Override
     public JwtResponse refresh(String refreshToken) {
-
         return jwtTokenProvider.refreshUserTokens(refreshToken);
     }
+
 }

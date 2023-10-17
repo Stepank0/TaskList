@@ -1,5 +1,6 @@
 package com.example.tasklist.repository.impl;
 
+
 import com.example.tasklist.domain.exception.ResourceMappingException;
 import com.example.tasklist.domain.user.Role;
 import com.example.tasklist.domain.user.User;
@@ -7,12 +8,14 @@ import com.example.tasklist.repository.DataSourceConfig;
 import com.example.tasklist.repository.UserRepository;
 import com.example.tasklist.repository.mappers.UserRowMapper;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Repository;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Optional;
 
-@Repository
+//@Repository
 @RequiredArgsConstructor
 public class UserRepositoryImpl implements UserRepository {
 
@@ -61,19 +64,23 @@ public class UserRepositoryImpl implements UserRepository {
 
     private final String CREATE = """
             INSERT INTO users (name, username, password)
-            VALUE(?, ?, ?)""";
+            VALUES (?, ?, ?)""";
 
     private final String INSERT_USER_ROLE = """
             INSERT INTO users_roles (user_id, role)
             VALUES (?, ?)""";
 
     private final String IS_TASK_OWNER = """
-            """;
+            SELECT exists(
+                           SELECT 1
+                           FROM users_tasks
+                           WHERE user_id = ?
+                             AND task_id = ?
+                       )""";
 
     private final String DELETE = """
             DELETE FROM users
             WHERE id = ?""";
-
 
     @Override
     public Optional<User> findById(Long id) {
@@ -86,8 +93,8 @@ public class UserRepositoryImpl implements UserRepository {
             try (ResultSet rs = statement.executeQuery()) {
                 return Optional.ofNullable(UserRowMapper.mapRow(rs));
             }
-        } catch (SQLException e) {
-            throw new ResourceMappingException("Error while finding user by id.");
+        } catch (SQLException throwables) {
+            throw new ResourceMappingException("Exception while finding user by id.");
         }
     }
 
@@ -102,8 +109,8 @@ public class UserRepositoryImpl implements UserRepository {
             try (ResultSet rs = statement.executeQuery()) {
                 return Optional.ofNullable(UserRowMapper.mapRow(rs));
             }
-        } catch (SQLException e) {
-            throw new ResourceMappingException("Error while finding user by username.");
+        } catch (SQLException throwables) {
+            throw new ResourceMappingException("Exception while finding user by username.");
         }
     }
 
@@ -116,8 +123,8 @@ public class UserRepositoryImpl implements UserRepository {
             statement.setString(2, user.getUsername());
             statement.setString(3, user.getPassword());
             statement.setLong(4, user.getId());
-        } catch (SQLException e) {
-            throw new ResourceMappingException("Error while updating user.");
+        } catch (SQLException throwables) {
+            throw new ResourceMappingException("Exception while updating user.");
         }
     }
 
@@ -125,8 +132,7 @@ public class UserRepositoryImpl implements UserRepository {
     public void create(User user) {
         try {
             Connection connection = dataSourceConfig.getConnection();
-            PreparedStatement statement = connection.prepareStatement(CREATE,
-                    PreparedStatement.RETURN_GENERATED_KEYS);
+            PreparedStatement statement = connection.prepareStatement(CREATE, PreparedStatement.RETURN_GENERATED_KEYS);
             statement.setString(1, user.getName());
             statement.setString(2, user.getUsername());
             statement.setString(3, user.getPassword());
@@ -135,8 +141,8 @@ public class UserRepositoryImpl implements UserRepository {
                 rs.next();
                 user.setId(rs.getLong(1));
             }
-        } catch (SQLException e) {
-            throw new ResourceMappingException("Error while creating user.");
+        } catch (SQLException throwables) {
+            throw new ResourceMappingException("Exception while creating user.");
         }
     }
 
@@ -148,8 +154,8 @@ public class UserRepositoryImpl implements UserRepository {
             statement.setLong(1, userId);
             statement.setString(2, role.name());
             statement.executeUpdate();
-        } catch (SQLException e) {
-            throw new ResourceMappingException("Error while inserting user role.");
+        } catch (SQLException throwables) {
+            throw new ResourceMappingException("Exception while inserting user role.");
         }
     }
 
@@ -159,13 +165,13 @@ public class UserRepositoryImpl implements UserRepository {
             Connection connection = dataSourceConfig.getConnection();
             PreparedStatement statement = connection.prepareStatement(IS_TASK_OWNER);
             statement.setLong(1, userId);
-            statement.setLong(1, taskId);
+            statement.setLong(2, taskId);
             try (ResultSet rs = statement.executeQuery()) {
                 rs.next();
                 return rs.getBoolean(1);
             }
-        } catch (SQLException e) {
-            throw new ResourceMappingException("Error while checking if user is task owner.");
+        } catch (SQLException throwables) {
+            throw new ResourceMappingException("Exception while checking if user is task owner..");
         }
     }
 
@@ -173,11 +179,11 @@ public class UserRepositoryImpl implements UserRepository {
     public void delete(Long id) {
         try {
             Connection connection = dataSourceConfig.getConnection();
-            PreparedStatement statement = connection.prepareStatement(INSERT_USER_ROLE);
+            PreparedStatement statement = connection.prepareStatement(DELETE);
             statement.setLong(1, id);
             statement.executeUpdate();
-        } catch (SQLException e) {
-            throw new ResourceMappingException("Error while delete user.");
+        } catch (SQLException throwables) {
+            throw new ResourceMappingException("Exception while deleting user.");
         }
     }
 

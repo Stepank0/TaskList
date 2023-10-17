@@ -4,7 +4,6 @@ import com.example.tasklist.domain.exception.ResourceNotFoundException;
 import com.example.tasklist.domain.task.Status;
 import com.example.tasklist.domain.task.Task;
 import com.example.tasklist.repository.TaskRepository;
-import com.example.tasklist.repository.UserRepository;
 import com.example.tasklist.service.TaskService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -28,7 +27,7 @@ public class TaskServiceImpl implements TaskService {
     @Override
     @Transactional(readOnly = true)
     public List<Task> getAllByUserId(Long id) {
-        return taskRepository.findAllByUser(id);
+        return taskRepository.findAllByUserId(id);
     }
 
     @Override

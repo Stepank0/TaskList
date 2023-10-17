@@ -11,11 +11,11 @@ import java.util.Collection;
 @AllArgsConstructor
 public class JwtEntity implements UserDetails {
 
-    private Long id;
+    private final Long id;
     private final String username;
     private final String name;
     private final String password;
-    private final Collection<? extends GrantedAuthority> authorities; //for switch rolls in spring
+    private final Collection<? extends GrantedAuthority> authorities;
 
     @Override
     public boolean isAccountNonExpired() {
@@ -36,4 +36,5 @@ public class JwtEntity implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
 }

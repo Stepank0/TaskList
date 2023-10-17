@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class JwtEntityFactory {
+public final class JwtEntityFactory {
 
     public static JwtEntity create(User user) {
         return new JwtEntity(
@@ -22,11 +22,10 @@ public class JwtEntityFactory {
     }
 
     private static List<GrantedAuthority> mapToGrantedAuthorities(List<Role> roles) {
-        return  roles.stream()
+        return roles.stream()
                 .map(Enum::name)
                 .map(SimpleGrantedAuthority::new)
                 .collect(Collectors.toList());
     }
-
 
 }

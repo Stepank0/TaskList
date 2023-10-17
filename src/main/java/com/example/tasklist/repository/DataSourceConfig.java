@@ -9,12 +9,12 @@ import java.sql.Connection;
 
 @Configuration
 @RequiredArgsConstructor
-public class DataSourceConfig  {
+public class DataSourceConfig {
 
     private final DataSource dataSource;
 
     public Connection getConnection() {
-       return DataSourceUtils.getConnection(dataSource);
+        return DataSourceUtils.getConnection(dataSource);
     }
 
 }
